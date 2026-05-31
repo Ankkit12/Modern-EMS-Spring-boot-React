@@ -12,4 +12,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     // sort by the last name
     public List<Employee> findAllByOrderByLastNameAsc();
 
+    List<Employee> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
+            String firstName,
+            String lastName);
+
 }
