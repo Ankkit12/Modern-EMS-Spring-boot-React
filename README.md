@@ -1,86 +1,127 @@
-# Employee Management System
+🚀 Employee Management System (Full-Stack)
 
-A Spring Boot Employee Management System built using Spring MVC, Thymeleaf, Spring Data JPA, MySQL, and Spring Security.
+A full-stack Employee Management System built using Spring Boot, Spring Security, JWT Authentication, React, MySQL, and Thymeleaf.
 
-## Features
+This project evolved from a basic CRUD system into a secure, production-style full-stack application with stateless authentication and role-based access control.
 
-* Employee CRUD Operations
-* Spring MVC with Thymeleaf
-* REST APIs
-* Swagger/OpenAPI Documentation
-* Global Exception Handling
-* Employee Search
-* Pagination & Sorting
-* Spring Security Authentication
-* Role-Based Authorization (ADMIN / USER)
-* MySQL Database Integration
+✨ Features
+🧑‍💼 Employee Management
+- Create, Read, Update, Delete (CRUD) employees
+- Search employees by keyword
+- Pagination & Sorting
+- RESTful API architecture
+  
+🔐 Security & Authentication
+- Spring Security integration
+- JDBC-based authentication with MySQL
+- Role-Based Access Control (ADMIN / MANAGER / EMPLOYEE)
+- JWT (JSON Web Token) Authentication
+- Stateless authentication using Bearer tokens
 
-## Tech Stack
+💡 Example:
 
-* Java
-* Spring Boot
-* Spring MVC
-* Spring Data JPA
-* Spring Security
-* Thymeleaf
-* MySQL
-* Swagger/OpenAPI
-* Maven
+Authorization: Bearer <JWT_TOKEN>
 
-## REST API Endpoints
+🎨 Frontend (React)
+- Login page with JWT authentication
+- Dashboard UI
+- Employee management interface
+- Integration with secure backend APIs
+- Responsive and modern UI
+  
+📘 API Documentation
+- Swagger / OpenAPI for API testing and documentation
 
-### Employee APIs
+⚠️ Exception Handling
+- Global exception handling for clean API responses
+  
+🛠 Tech Stack
 
-* GET /v1/employee
-* GET /v1/employee/{id}
-* POST /v1/employee
-* DELETE /v1/employee/{id}
+Backend:
 
-### Search
+- Java
+- Spring Boot
+- Spring MVC
+- Spring Security
+- Spring Data JPA
+- JWT
+- JDBC Authentication
 
-* GET /v1/employee/search?keyword={keyword}
+Frontend:
 
-### Pagination
+- React.js
 
-* GET /v1/employee/page?page=0&size=5
+Database:
 
-## Security
+- MySQL
 
-Implemented Spring Security with:
+Tools & Others:
 
-* In-Memory Authentication
-* Role-Based Authorization
-* ADMIN Role
-* USER Role
+- Swagger/OpenAPI
+- Maven
 
-### Demo Credentials
+📡 REST API Endpoints
+Employee APIs
+- GET /v1/employee
+- GET /v1/employee/{id}
+- POST /v1/employee
+- PUT /v1/employee/{id}
+- DELETE /v1/employee/{id}
+
+Search & Pagination
+- GET /v1/employee/search?keyword={keyword}
+- GET /v1/employee/page?page=0&size=5
+
+Authentication
+- POST /auth/login
+
+🔐 Security Flow
+1. User logs in using credentials (JDBC + MySQL)
+2. Spring Security validates user
+3. JWT token is generated on successful authentication4
+4. Frontend stores token
+5.All protected APIs require:
+
+Authorization: Bearer <JWT_TOKEN>
+
+👨‍💻 Demo Credentials (if enabled)
 
 ADMIN
 
-* Username: admin
-* Password: admin123
+Username: susan
+Password: fun123
 
 USER
 
-* Username: user
-* Password: user123
+Username: john
+Password: fun123
 
-## Screenshots
-<img width="1211" height="695" alt="Screenshot 2026-05-31 230106" src="https://github.com/user-attachments/assets/3199025e-cabd-4538-8850-b2fca975ec04" />
-<img width="1561" height="415" alt="Screenshot 2026-05-31 225828" src="https://github.com/user-attachments/assets/d158ef98-207a-40fb-8fbd-51db10ecbb35" />
-<img width="1192" height="892" alt="Screenshot 2026-05-31 225802" src="https://github.com/user-attachments/assets/256a3f2e-c03f-4e5e-932d-74fdb5e7cc07" />
-<img width="1466" height="807" alt="Screenshot 2026-05-31 225614" src="https://github.com/user-attachments/assets/9c39a93e-9fd0-4fe2-bcc6-a15f4d8bea89" />
-<img width="1812" height="948" alt="Screenshot 2026-05-31 225521" src="https://github.com/user-attachments/assets/9aab9133-c57c-4d47-bfb4-e4238adfa101" />
-<img width="1737" height="616" alt="Screenshot 2026-05-31 225420" src="https://github.com/user-attachments/assets/58649dc3-ad4f-4e00-b8b1-7938e1693b8d" />
-<img width="1598" height="497" alt="Screenshot 2026-05-31 225153" src="https://github.com/user-attachments/assets/6582cf05-c030-4fd0-bbb3-1abf6ecc1c5b" />
-<img width="1746" height="790" alt="Screenshot 2026-05-31 225350" src="https://github.com/user-attachments/assets/83fecc51-3cc8-45a5-b4d6-d9f12b872131" />
+🧠 Key Learnings
+- Spring Security filter chain architecture
+- Session-based vs JWT-based authentication
+- Stateless authentication in REST APIs
+- JDBC authentication with MySQL
+- Full-stack integration (React + Spring Boot)
+- Role-based authorization in real applications
+- API security using Bearer tokens
+ 
+📸 Screenshots
 
+<img width="1907" height="632" alt="Screenshot 2026-06-28 215155" src="https://github.com/user-attachments/assets/f001fcf3-7f36-4835-9af4-4f4aa98ae38d" />
+<img width="1907" height="462" alt="Screenshot 2026-06-28 215723" src="https://github.com/user-attachments/assets/49cfe95a-fc1f-4bd8-9f2d-309210931800" />
+<img width="1902" height="667" alt="Screenshot 2026-06-28 215635" src="https://github.com/user-attachments/assets/8d9fd67b-97f6-403f-a741-2a01304712d0" />
+<img width="1907" height="892" alt="Screenshot 2026-06-28 215528" src="https://github.com/user-attachments/assets/afc68e8b-35cf-43fd-ace9-5e9c44450cd8" />
+<img width="1895" height="905" alt="Screenshot 2026-06-28 215421" src="https://github.com/user-attachments/assets/ffa83daf-7c0e-41a4-ac23-638bf930b3f6" />
+<img width="1892" height="717" alt="Screenshot 2026-06-28 215356" src="https://github.com/user-attachments/assets/253fd84c-652b-4e0e-ae0f-f7ce278df843" />
 
+🚀 Future Enhancements
+- Docker containerization 🐳
+- Cloud deployment (AWS / Render / Railway)
 
-## Future Enhancements
+📊 Project Status
 
-* React Frontend
-* Docker Containerization
-* Live Deployment
-* JWT Authentication
-* Database-Based Users and Roles
+👉 Evolving from a learning project into a production-style full-stack application
+
+⭐ Tech Tags
+
+#SpringBoot #ReactJS #JWT #SpringSecurity #MySQL #FullStack #Java #BackendDevelopment #SystemDesign #SoftwareEngineering
