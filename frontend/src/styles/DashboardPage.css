@@ -1,0 +1,11 @@
+/* Dashboard page styles */
+.dashboard{display:flex;flex-direction:column;gap:18px}
+.dashboard-header{display:flex;flex-direction:column}
+.greeting{font-size:20px;font-weight:700;color:#0f172a}
+.subtitle{font-size:13px;color:var(--muted)}
+.cards{display:flex;gap:16px}
+.card{flex:1;background:var(--panel);border-radius:12px;padding:18px;box-shadow:var(--shadow)}
+.card h3{margin:0;color:#374151}
+.card .big{font-size:28px;font-weight:700;margin-top:8px;color:var(--accent)}
+
+@media (max-width:800px){.cards{flex-direction:column}}

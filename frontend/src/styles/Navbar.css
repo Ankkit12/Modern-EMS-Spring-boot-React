@@ -1,0 +1,14 @@
+.topnav{position:fixed;left:0;right:0;top:0;height:64px;background:#ffffff;border-bottom:1px solid rgba(15,23,42,0.04);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:50}
+.topnav .logo{font-weight:700;color:#2563eb;font-size:18px}
+.topnav .center{display:flex;gap:18px;align-items:center}
+.topnav .center a{color:#334155;text-decoration:none;padding:8px 10px;border-radius:8px}
+.topnav .center a.active{background:rgba(37,99,235,0.08);color:#2563eb}
+.topnav .right{display:flex;gap:12px;align-items:center}
+.user-info{display:flex;flex-direction:row;align-items:center;gap:8px;margin-right:6px;text-align:left}
+.username{font-weight:600;color:#0f172a}
+.role-badge{display:none}
+.btn-ghost{background:transparent;border:1px solid #e6eefc;padding:8px 10px;border-radius:8px;color:#2563eb;cursor:pointer}
+
+@media (max-width:700px){
+	.topnav .center{display:none}
+}
