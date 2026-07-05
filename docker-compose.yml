@@ -1,0 +1,55 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: employee-mysql
+
+    restart: always
+
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
+    ports:
+      - "3307:3306"
+
+    volumes:
+        - mysql-data:/var/lib/mysql
+        - ./sql-scripts/employee_directory_employee.sql:/docker-entrypoint-initdb.d/employee.sql
+        - ./sql-scripts/employee_directory_members.sql:/docker-entrypoint-initdb.d/members.sql
+        - ./sql-scripts/employee_directory_roles.sql:/docker-entrypoint-initdb.d/roles.sql
+
+  backend:
+    build: .
+
+    container_name: employee-backend
+
+    depends_on:
+      - mysql
+
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+
+  frontend:
+    build: ./frontend
+
+    container_name: employee-frontend
+
+    ports:
+      - "5173:80"
+
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
