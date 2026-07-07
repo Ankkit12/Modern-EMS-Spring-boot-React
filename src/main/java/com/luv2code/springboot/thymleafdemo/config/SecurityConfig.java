@@ -2,8 +2,12 @@ package com.luv2code.springboot.thymleafdemo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +15,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -41,63 +58,67 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(auth -> auth
+        http
+                .csrf(csrf -> csrf.disable())
 
-                // Swagger
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // give access to url paths having ("/swagger-ui/**", ** means after it)
-                .requestMatchers(
-                        "/swagger-ui/**",
-                        "/v3/api-docs/**")
-                .permitAll()
+                .authorizeHttpRequests(auth -> auth
 
-                // GET APIs
-                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                        "/v1/employee/**")
-                .hasAnyRole("USER", "ADMIN")
+                        // Login API
+                        .requestMatchers("/auth/login").permitAll()
 
-                // POST APIs
-                .requestMatchers(org.springframework.http.HttpMethod.POST,
-                        "/v1/employee/**")
-                .hasRole("ADMIN")
+                        // Swagger
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**")
+                        .permitAll()
 
-                // DELETE APIs
-                .requestMatchers(org.springframework.http.HttpMethod.DELETE,
-                        "/v1/employee/**")
-                .hasRole("ADMIN")
+                        // REST APIs
+                        .requestMatchers(HttpMethod.GET,
+                                "/v1/employee/**")
+                        .hasAnyRole("USER", "ADMIN")
 
-                // GET APIs MVC
-                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                        "/employees/getList/**")
-                .hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST,
+                                "/v1/employee/**")
+                        .hasRole("ADMIN")
 
-                // POST APIs MVC
-                .requestMatchers(org.springframework.http.HttpMethod.POST,
-                        "/employees/save/**")
-                .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,
+                                "/v1/employee/**")
+                        .hasRole("ADMIN")
 
-                // Update APIs MVC
-                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                        "/employees/showFormToUpdate/**")
-                .hasRole("ADMIN")
+                        // MVC
+                        .requestMatchers(HttpMethod.GET,
+                                "/employees/getList/**")
+                        .hasAnyRole("USER", "ADMIN")
 
-                // Show form APIs MVC
-                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                        "/employees/showFormForAdd/**")
-                .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST,
+                                "/employees/save/**")
+                        .hasRole("ADMIN")
 
-                // DELETE APIs MVC
-                .requestMatchers(org.springframework.http.HttpMethod.GET,
-                        "/employees/delete/**")
-                .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,
+                                "/employees/showFormToUpdate/**")
+                        .hasRole("ADMIN")
 
-                .anyRequest()
-                .authenticated()
-        );
+                        .requestMatchers(HttpMethod.GET,
+                                "/employees/showFormForAdd/**")
+                        .hasRole("ADMIN")
 
-        http.httpBasic(Customizer.withDefaults());
+                        .requestMatchers(HttpMethod.GET,
+                                "/employees/delete/**")
+                        .hasRole("ADMIN")
 
-        http.csrf(csrf -> csrf.disable());
+                        .anyRequest()
+                        .authenticated()
+                )
+
+                .httpBasic(Customizer.withDefaults())
+
+                .addFilterBefore(
+                        jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                );
 
         return http.build();
     }
