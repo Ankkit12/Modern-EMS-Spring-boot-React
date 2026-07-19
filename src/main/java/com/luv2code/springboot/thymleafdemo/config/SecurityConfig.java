@@ -153,7 +153,7 @@ public PasswordEncoder passwordEncoder() {
                 // GET APIs
                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                         "/v1/employee/**")
-                .hasAnyRole("USER", "ADMIN")
+                .hasAnyRole("EMPLOYEE", "MANAGER", "ADMIN")
 
                 // POST APIs
                 .requestMatchers(org.springframework.http.HttpMethod.POST,
@@ -168,7 +168,7 @@ public PasswordEncoder passwordEncoder() {
                 // GET APIs MVC
                 .requestMatchers(org.springframework.http.HttpMethod.GET,
                         "/employees/getList/**")
-                .hasAnyRole("USER", "ADMIN")
+                .hasAnyRole("EMPLOYEE", "MANAGER", "ADMIN")
 
                 // POST APIs MVC
                 .requestMatchers(org.springframework.http.HttpMethod.POST,
