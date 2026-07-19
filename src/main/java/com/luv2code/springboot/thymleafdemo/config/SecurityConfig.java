@@ -25,6 +25,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import javax.sql.DataSource;
 import java.util.List;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 @Configuration
 public class SecurityConfig {
@@ -47,10 +48,12 @@ public class SecurityConfig {
 
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+
+
+@Bean
+public PasswordEncoder passwordEncoder() {
+    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+}
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
