@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://modern-ems-spring-boot-react.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
@@ -19,13 +19,11 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
 
     if (error.response?.status === 401) {
-
       localStorage.clear();
-
       window.location.href = "/login";
     }
 
